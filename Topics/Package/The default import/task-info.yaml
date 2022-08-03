@@ -1,10 +1,10 @@
 type: choice
 is_multiple_choice: false
 options:
-- text: java.lang
-- text: java.io
-- text: java.math
 - text: java.util
+- text: java.math
+- text: java.io
+- text: java.lang
 files:
 - name: src/Task.java
   visible: true

@@ -18,6 +18,9 @@
             <option value="$PROJECT_DIR$/Recipes/task/build/reports/tests" />
             <option value="$PROJECT_DIR$/Recipes/task/build/test-results" />
             <option value="$PROJECT_DIR$/Recipes/task/build/tmp" />
+            <option value="$PROJECT_DIR$/Topics/HashMap/Countries and capitals" />
+            <option value="$PROJECT_DIR$/Topics/HashMap/The same pairs" />
+            <option value="$PROJECT_DIR$/Topics/HashMap/Theory" />
             <option value="$PROJECT_DIR$/Topics/Package/Correct packages" />
             <option value="$PROJECT_DIR$/Topics/Package/Creating instances" />
             <option value="$PROJECT_DIR$/Topics/Package/Getting input" />
@@ -25,6 +28,13 @@
             <option value="$PROJECT_DIR$/Topics/Package/The default import" />
             <option value="$PROJECT_DIR$/Topics/Package/The full name of a class" />
             <option value="$PROJECT_DIR$/Topics/Package/Theory" />
+            <option value="$PROJECT_DIR$/Topics/toString()/Account" />
+            <option value="$PROJECT_DIR$/Topics/toString()/Class hierarchy" />
+            <option value="$PROJECT_DIR$/Topics/toString()/Convert persons and patients to string" />
+            <option value="$PROJECT_DIR$/Topics/toString()/String representation" />
+            <option value="$PROJECT_DIR$/Topics/toString()/Theory" />
+            <option value="$PROJECT_DIR$/Topics/toString()/Users as strings" />
+            <option value="$PROJECT_DIR$/Topics/toString()/toString method" />
             <option value="$PROJECT_DIR$/util" />
           </set>
         </option>
