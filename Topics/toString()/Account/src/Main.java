@@ -12,7 +12,15 @@ class Account {
         this.balance = balance;
     }
 
-    // Override toString() here
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", balance=" + balance +
+                '}';
+    }
+
 }
 
 /* Do not change code below */

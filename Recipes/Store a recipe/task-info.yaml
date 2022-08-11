@@ -308,6 +308,70 @@ files:
         }
     }
   learner_created: false
+- name: src/recipes/RecipeController.java
+  visible: true
+  text: |+
+    package recipes;
+
+    import org.springframework.http.HttpStatus;
+    import org.springframework.web.bind.annotation.*;
+    import org.springframework.web.server.ResponseStatusException;
+
+    import java.util.Map;
+    import java.util.concurrent.ConcurrentHashMap;
+
+    @RestController
+    public class RecipeController {
+        private static final Map<Integer, Recipe> recipeList = new ConcurrentHashMap<>();
+        private static int count = 0;
+
+        @PostMapping("/api/recipe/new")
+        Map<String, Integer> setRecipe(@RequestBody Recipe recipe) {
+            int id = ++count;
+            recipeList.put(count, recipe);
+            return Map.of("id", count);
+        }
+
+        @GetMapping("/api/recipe/{id}")
+        Recipe getRecipe(@PathVariable int id) {
+            Recipe recipe = recipeList.get(id);
+            if (recipe == null) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+            return recipe;
+        }
+    }
+
+
+  learner_created: true
+- name: src/recipes/Recipe.java
+  visible: true
+  text: |
+    package recipes;
+
+    import lombok.AllArgsConstructor;
+    import lombok.Data;
+    import lombok.NoArgsConstructor;
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public class Recipe {
+        private String name;
+        private String description;
+        private String[] ingredients;
+        private String[] directions;
+    }
+  learner_created: true
+- name: src/recipes/RecipeService.java
+  visible: true
+  learner_created: true
+- name: src/recipes/RecipeRepository.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13090#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Thu, 11 Aug 2022 08:19:52 UTC
 record: -1

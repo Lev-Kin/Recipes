@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/529086/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Wed, 03 Aug 2022 07:00:33 UTC
+update_date: Thu, 11 Aug 2022 05:15:39 UTC
 stages:
 - id: 917
   step: 13088
@@ -13,7 +13,7 @@ stages:
   is_completed: true
 - id: 919
   step: 13090
-  is_completed: false
+  is_completed: true
 - id: 920
   step: 13091
   is_completed: false
@@ -34,10 +34,6 @@ topics:
     theory_id: 9704
   - title: Computer algorithms
     theory_id: 16547
-  - title: World Wide Web
-    theory_id: 6633
-  - title: HyperText Transfer Protocol
-    theory_id: 6569
   - title: The big O notation
     theory_id: 16699
   - title: Best, average and worst cases
@@ -46,6 +42,10 @@ topics:
     theory_id: 16927
   - title: Immutability
     theory_id: 7929
+  - title: World Wide Web
+    theory_id: 6633
+  - title: HyperText Transfer Protocol
+    theory_id: 6569
   - title: HTML basics
     theory_id: 6434
   - title: HTTP URL
@@ -178,26 +178,26 @@ topics:
     theory_id: 19510
   - title: Complex constructions in pseudocode
     theory_id: 20922
-  - title: Web development
-    theory_id: 13931
   - title: Fixed-size array
     theory_id: 20078
   - title: Dynamic array
     theory_id: 5357
   - title: External resources
     theory_id: 6216
+  - title: Web development
+    theory_id: 13931
   - title: Libraries
     theory_id: 8504
   - title: Frameworks
     theory_id: 6701
   - title: IntelliJ IDEA
     theory_id: 3801
-  - title: JSON
-    theory_id: 6854
   - title: YAML
     theory_id: 12722
   - title: Introduction to software architecture
     theory_id: 15368
+  - title: JSON
+    theory_id: 6854
   - title: Reducing boilerplate code with Lombok
     theory_id: 13983
   - title: Introduction to generic programming
@@ -314,10 +314,6 @@ topics:
     theory_id: 6901
   - title: Intro to MySQL
     theory_id: 16662
-  - title: Data and object mapping
-    theory_id: 8262
-  - title: Object-Relational Mapping (ORM)
-    theory_id: 8312
   - title: Regexps basics
     theory_id: 7580
   - title: Regexps in Java
@@ -330,6 +326,10 @@ topics:
     theory_id: 3680
   - title: Regexes in programs
     theory_id: 3696
+  - title: Data and object mapping
+    theory_id: 8262
+  - title: Object-Relational Mapping (ORM)
+    theory_id: 8312
   - title: Introduction to transactions
     theory_id: 12144
   - title: Introduction to PostgreSQL
