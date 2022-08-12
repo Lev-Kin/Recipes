@@ -635,6 +635,191 @@ files:
         }
     }
   learner_created: false
+- name: src/recipes/RecipeController.java
+  visible: true
+  text: |+
+    package recipes;
+
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.http.HttpStatus;
+    import org.springframework.http.ResponseEntity;
+    import org.springframework.validation.annotation.Validated;
+    import org.springframework.web.bind.annotation.*;
+    import org.springframework.web.server.ResponseStatusException;
+
+    import javax.validation.Valid;
+    import java.util.LinkedHashMap;
+    import java.util.Map;
+    import java.util.Optional;
+
+
+    @RestController
+    @Validated
+    public class RecipeController {
+
+        @Autowired
+        RecipeService recipeService;
+
+        @PostMapping("/api/recipe/new")
+        Map<String, Long> setRecipe(@Valid @RequestBody Recipe recipe) {
+            long id = recipeService.saveRecipe(recipe);
+            return Map.of("id", id);
+        }
+
+        @GetMapping("/api/recipe/{id}")
+        Map<String, Object> getRecipe(@PathVariable int id) {
+            Optional<Recipe> recipeById = recipeService.getRecipeById(id);
+            if (recipeById.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+            Recipe recipe = recipeById.get();
+            Map<String, Object> recipeToReturn = new LinkedHashMap<>();
+            recipeToReturn.put("name", recipe.getName());
+            recipeToReturn.put("description", recipe.getDescription());
+            recipeToReturn.put("ingredients", recipe.getIngredients());
+            recipeToReturn.put("directions", recipe.getDirections());
+            return recipeToReturn;
+        }
+
+        @DeleteMapping("/api/recipe/{id}")
+        ResponseEntity<?> deleteRecipe(@Valid @PathVariable long id) {
+            Optional<Recipe> recipeById = recipeService.getRecipeById(id);
+            if (recipeById.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            }
+            recipeService.deleteRecipeById(id);
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+  learner_created: true
+- name: src/recipes/RecipeRepository.java
+  visible: true
+  text: |+
+    package recipes;
+
+    import org.springframework.data.repository.CrudRepository;
+    import org.springframework.stereotype.Repository;
+
+    @Repository
+    public interface RecipeRepository extends CrudRepository<Recipe, Long> {
+    }
+
+  learner_created: true
+- name: src/recipes/Recipe.java
+  visible: true
+  text: |+
+    package recipes;
+
+    import lombok.Data;
+    import lombok.NoArgsConstructor;
+
+    import javax.persistence.*;
+    import javax.validation.constraints.NotBlank;
+    import javax.validation.constraints.NotNull;
+    import javax.validation.constraints.Size;
+    import java.util.List;
+
+
+    @Entity
+    @Table(name = "recipe")
+    @Data
+    @NoArgsConstructor
+    public class Recipe {
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO)
+        @Column(name = "id")
+        private long id;
+
+        @Column(name = "name")
+        @NotNull
+        @NotBlank
+        private String name;
+
+        @Column(name = "description")
+        @NotNull
+        @NotBlank
+        private String description;
+
+        @Column(name = "ingredients")
+        @NotNull
+        @ElementCollection
+        @CollectionTable(
+                name = "ingredients",
+                joinColumns = @JoinColumn(name = "id")
+        )
+        @Size(min = 1)
+        private List<String> ingredients;
+
+        @Column(name = "directions")
+        @NotNull
+        @ElementCollection
+        @CollectionTable(
+                name = "directions",
+                joinColumns = @JoinColumn(name = "id")
+        )
+        @Size(min = 1)
+        private List<String> directions;
+
+        public Recipe(String name, String description, List<String> ingredients, List<String> directions) {
+            this.name = name;
+            this.description = description;
+            this.ingredients = ingredients;
+            this.directions = directions;
+        }
+    }
+
+  learner_created: true
+- name: src/recipes/RecipeService.java
+  visible: true
+  text: |+
+    package recipes;
+
+    import org.springframework.beans.factory.annotation.Autowired;
+    import org.springframework.stereotype.Service;
+
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.Optional;
+
+
+    @Service
+    public class RecipeService {
+        private RecipeRepository recipeRepository;
+
+        @Autowired
+        public RecipeService(RecipeRepository recipeRepository) {
+            this.recipeRepository = recipeRepository;
+        }
+
+        public long saveRecipe(Recipe toSave) {
+            Recipe saveRecipe = recipeRepository.save(toSave);
+            return saveRecipe.getId();
+        }
+
+        public Optional<Recipe> getRecipeById(long id) {
+            if (recipeRepository.findById(id).isPresent()) {
+                return Optional.of(recipeRepository.findById(id).get());
+            } else {
+                return Optional.empty();
+            }
+        }
+
+        public void deleteRecipeById(long id) {
+            recipeRepository.deleteById(id);
+        }
+
+        public List<Recipe> getAllRecipes() {
+            List<Recipe> recipeList = new ArrayList<>();
+            recipeRepository.findAll().forEach(recipeList::add);
+            return recipeList;
+        }
+    }
+
+  learner_created: true
 feedback_link: https://hyperskill.org/learn/step/13091#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Fri, 12 Aug 2022 08:39:54 UTC
 record: -1

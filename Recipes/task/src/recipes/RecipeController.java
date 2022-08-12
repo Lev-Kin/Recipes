@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -16,7 +16,6 @@ import java.util.Optional;
 @RestController
 @Validated
 public class RecipeController {
-
     @Autowired
     RecipeService recipeService;
 
@@ -27,18 +26,37 @@ public class RecipeController {
     }
 
     @GetMapping("/api/recipe/{id}")
-    Map<String, Object> getRecipe(@PathVariable int id) {
+    Recipe getRecipe(@PathVariable int id) {
         Optional<Recipe> recipeById = recipeService.getRecipeById(id);
         if (recipeById.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
-        Recipe recipe = recipeById.get();
-        Map<String, Object> recipeToReturn = new LinkedHashMap<>();
-        recipeToReturn.put("name", recipe.getName());
-        recipeToReturn.put("description", recipe.getDescription());
-        recipeToReturn.put("ingredients", recipe.getIngredients());
-        recipeToReturn.put("directions", recipe.getDirections());
-        return recipeToReturn;
+        return recipeById.get();
+    }
+
+    @GetMapping(value = "/api/recipe/search")
+    List<Recipe> getCategoryListRecipes
+            (
+                    @RequestParam(value = "category", required = false) String category,
+                    @RequestParam(value = "name", required = false) String name
+            ) {
+        if (category != null && name == null) {
+            return recipeService.getCategoryList(category);
+        } else if (name != null && category == null) {
+            return recipeService.getNameList(name);
+        } else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/api/recipe/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void updateRecipe(@Valid @PathVariable long id, @Valid @RequestBody Recipe recipe) {
+        Optional<Recipe> recipeById = recipeService.getRecipeById(id);
+        if (recipeById.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        recipeService.saveRecipe(recipe, id);
     }
 
     @DeleteMapping("/api/recipe/{id}")
