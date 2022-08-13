@@ -3,6 +3,8 @@ package recipes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.LastModifiedBy;
+import recipes.security.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -20,7 +22,7 @@ public class Recipe {
 
     @Id
     @JsonIgnore
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
@@ -35,7 +37,6 @@ public class Recipe {
     private String category;
 
     @Column(name = "date")
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private LocalDateTime date;
 
     @NotNull
@@ -50,7 +51,7 @@ public class Recipe {
                     name = "ingredients",
                     joinColumns = @JoinColumn(name = "id")
             )
-    @Size(min = 1)
+    @Size(min = 1, message = "Provide at least one ingredient")
     @Column(name = "ingredients")
     private List<String> ingredients;
 
@@ -61,9 +62,15 @@ public class Recipe {
                     name = "directions",
                     joinColumns = @JoinColumn(name = "id")
             )
-    @Size(min = 1)
+    @Size(min = 1, message = "Provide at least oen ingredient")
     @Column(name = "directions")
     private List<String> directions;
+
+    @LastModifiedBy
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "added_by", nullable = false)
+    private User userCreate;
 
     public Recipe(String name, String category, String description, List<String> ingredients, List<String> directions) {
         this.name = name;
